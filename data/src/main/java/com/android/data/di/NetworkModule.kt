@@ -3,6 +3,9 @@ package com.android.data.di
 
 import android.content.Context
 import com.android.data.BuildConfig
+import com.android.data.di.qualifier.NetworkTimeOut
+import com.android.data.di.qualifier.ReadTimeOut
+import com.android.data.di.qualifier.WriteTimeOut
 import com.android.data.source.remote.ApiService
 import com.android.data.utils.Constants.BASE_URL
 import com.android.data.utils.Constants.NETWORK_TIME_OUT
@@ -33,23 +36,26 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    @NetworkTimeOut
     fun provideNetworkTimeOut() = NETWORK_TIME_OUT
 
     @Provides
     @Singleton
+    @WriteTimeOut
     fun provideWriteTimeOut() = WRITE_TIME_OUT
 
     @Provides
     @Singleton
+    @ReadTimeOut
     fun provideReadTimeOut() = READ_TIME_OUT
 
     @Provides
     @Singleton
     fun provideOkHttpClient(
         @ApplicationContext context: Context,
-        networkTimeout: Long,
-        writeTimeout: Long,
-        readTimeout: Long,
+        @NetworkTimeOut networkTimeout: Long,
+        @WriteTimeOut writeTimeout: Long,
+        @ReadTimeOut readTimeout: Long,
     ): OkHttpClient {
         val cacheSize = (5 * 1024 * 1024).toLong()
         val mCache = Cache(context.cacheDir, cacheSize)
