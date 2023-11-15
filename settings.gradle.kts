@@ -17,3 +17,4 @@ rootProject.name = "Android-Clean-Architecture-MVVM"
 include(":app")
 include(":data")
 include(":domain")
+include(":feature:album")
